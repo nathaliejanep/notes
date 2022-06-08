@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 
 const Login = () => {
   const [online, setOnline] = useState(false);
@@ -17,18 +17,20 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    Axios.post('http://localhost:3000/login', {
-      username: username,
-      password: password,
-    }).then((res) => {
-      console.log(res.data.status);
-      if (res.data.status === 'wrong') {
-        setError(true);
-      } else if (res.data.status === 'ok') {
-        setOnline(true);
-        setError(false);
-      }
-    });
+    axios
+      .post('http://localhost:3000/login', {
+        username: username,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res.data.status);
+        if (res.data.status === 'wrong') {
+          setError(true);
+        } else if (res.data.status === 'ok') {
+          setOnline(true);
+          setError(false);
+        }
+      });
 
     e.target.reset();
   };

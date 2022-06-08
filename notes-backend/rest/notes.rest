@@ -1,0 +1,33 @@
+GET http://localhost:3000/notes/ 
+
+###
+
+POST http://localhost:5000/notes 
+Content-Type: application/json
+
+{
+"username":"isabea", "password":"21"
+}
+
+###
+
+POST http://localhost:3000/notes/add
+Content-Type: application/json
+
+{
+"text":"hej test"
+}
+
+###
+
+PUT http://localhost:3000/users Content-Type: application/json
+
+{
+"_id":"628b89a4fba196c1ff3bb9b2", "newsletter":false
+}
+
+###
+
+DELETE http://localhost:3000/users/628b89a4fba196c1ff3bb9b2
+
+###
