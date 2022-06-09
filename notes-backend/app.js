@@ -5,7 +5,8 @@ const logger = require('morgan');
 const mysql = require('mysql2');
 const cors = require('cors');
 
-// const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 const indexRouter = require('./routes/index');
 const notesRouter = require('./routes/notes');
@@ -21,7 +22,7 @@ app.locals.con = mysql.createConnection({
   database: 'notes',
 });
 
-// app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 app.set('view engine', 'html');
 
 app.use(cors());

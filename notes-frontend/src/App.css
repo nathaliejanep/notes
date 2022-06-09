@@ -2,14 +2,11 @@
   text-align: center;
 }
 
-
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 
 .App-link {
   color: #61dafb;
@@ -22,4 +19,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.note-box {
+  border: 1px solid #000;
 }
