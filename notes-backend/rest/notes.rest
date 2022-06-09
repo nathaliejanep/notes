@@ -2,12 +2,7 @@ GET http://localhost:3000/notes/
 
 ###
 
-POST http://localhost:5000/notes 
-Content-Type: application/json
-
-{
-"username":"isabea", "password":"21"
-}
+GET http://localhost:3000/notes/40 
 
 ###
 
@@ -20,14 +15,16 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/users Content-Type: application/json
+PUT http://localhost:3000/notes/edit
+Content-Type: application/json
 
 {
-"_id":"628b89a4fba196c1ff3bb9b2", "newsletter":false
+"text":"ja det funkaaar bra",
+"id":38
 }
 
 ###
 
-DELETE http://localhost:3000/users/628b89a4fba196c1ff3bb9b2
+DELETE http://localhost:3001/notes/delete/33
 
 ###
