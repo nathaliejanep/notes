@@ -34,9 +34,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/create', (req, res, next) => {
-  const title = req.body.title;
-  const text = req.body.text;
-  const author = req.body.author;
+  const { title, text, author } = req.body;
 
   console.log(title + text + author);
   let sql = `INSERT INTO notes (title, text, author) VALUES (?,?,?)`;
@@ -53,8 +51,7 @@ router.post('/create', (req, res, next) => {
 });
 
 router.put('/edit', (req, res) => {
-  const id = req.body.id;
-  const text = req.body.text;
+  const { id, text } = req.body;
 
   // uppdatera time : CURRENT_TIMESTAMP ? title
   const sql = `UPDATE notes SET text = ? WHERE id = ?`;

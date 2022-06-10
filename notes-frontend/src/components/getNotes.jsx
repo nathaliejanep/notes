@@ -4,16 +4,21 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const GetNotes = () => {
-  const [title, setTitle] = useState('');
+  const [online, setOnline] = useState(false);
   const [notes, setNotes] = useState([]);
   const [body, setBody] = useState('');
   const [showEdit, setShowEdit] = useState('');
   const [noteInfo, setNoteInfo] = useState({ text: '' });
 
+  const lsID = localStorage.getItem('ID');
+
   useEffect(() => {
     axios('http://localhost:3001/notes').then((res) => {
       setNotes(res.data);
       console.log(notes);
+      if (lsID) {
+        setOnline(true);
+      }
     });
   }, []);
 
@@ -66,7 +71,7 @@ const GetNotes = () => {
       </div>
     </div>
   );
-  return renderNotes;
+  return <div>{online ? renderNotes : <p>Log in first</p>}</div>;
 };
 
 export default GetNotes;

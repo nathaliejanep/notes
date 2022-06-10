@@ -24,13 +24,14 @@ function App() {
           Learn React
         </a> */}
       </header>
-      <ul>
+      <Login />
+      {/* <ul>
         <li>
           <Link to='/login'>Login</Link>
         </li>
-        {/* <li>
+        <li>
           <Link to='/notes'>Notes</Link>
-        </li> */}
+        </li>
         <li>
           <Link to='/getnotes'>All Notes</Link>
         </li>
@@ -40,7 +41,7 @@ function App() {
         <li>
           <Link to='/editnote'>Edit Note</Link>
         </li>
-      </ul>
+      </ul> */}
 
       <Routes>
         <Route path='/login' element={<Login />}></Route>

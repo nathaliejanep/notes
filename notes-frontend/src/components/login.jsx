@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
@@ -7,11 +8,13 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // If localstorage exists go to loggedin
-  // const lsID = localStorage.getItem('ID');
-  //   if (lsID) {
-  //     return <LoggedIn />;
-  //   }
+  //If localstorage exists go to loggedin
+  const lsID = localStorage.getItem('ID');
+  useEffect(() => {
+    if (lsID) {
+      setOnline(true);
+    }
+  }, []);
 
   // If fetched status ok - set ls and online
   const handleSubmit = (e) => {
@@ -23,16 +26,24 @@ const Login = () => {
         password: password,
       })
       .then((res) => {
-        console.log(res.data.status);
-        if (res.data.status === 'wrong') {
+        const status = res.data.status;
+        const getId = res.data.result[0].id;
+
+        if (status === 'wrong') {
           setError(true);
-        } else if (res.data.status === 'ok') {
+        } else if (status === 'ok') {
           setOnline(true);
           setError(false);
+          localStorage.setItem('ID', getId);
         }
       });
 
     e.target.reset();
+  };
+
+  const signOut = () => {
+    localStorage.removeItem('ID');
+    setOnline(false);
   };
 
   const renderForm = (
@@ -65,10 +76,22 @@ const Login = () => {
       </form>
     </div>
   );
-
+  const renderOnline = (
+    <div>
+      <button onClick={signOut}>Sign out</button>
+      <ul>
+        <li>
+          <Link to='/getnotes'>All Notes</Link>
+        </li>
+        <li>
+          <Link to='/createnote'>Add New Note</Link>
+        </li>
+      </ul>
+    </div>
+  );
   return (
     <div className='maincontainer'>
-      <div>{online ? 'Hi you are online' : renderForm}</div>
+      <div>{online ? renderOnline : renderForm}</div>
       <div>
         {error ? <p>Invalid username or password</p> : <p>Welcome to Log In</p>}
       </div>
