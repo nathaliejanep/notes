@@ -9,7 +9,6 @@ const Notes = () => {
   const [body, setBody] = useState('');
   const [showForm, setShowForm] = useState('');
   const [noteInfo, setNoteInfo] = useState({ text: '' });
-  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     console.log(body);
@@ -23,7 +22,6 @@ const Notes = () => {
   };
 
   const editNote = () => {
-    setEdit(true);
     axios
       .put(`http://localhost:3001/notes/edit`, {
         text: noteInfo,
@@ -35,7 +33,6 @@ const Notes = () => {
   };
 
   const getNote = (id) => {
-    setEdit(true);
     axios(`http://localhost:3001/notes/${id}`).then((res) => {
       setNoteInfo(res.data[0].text);
       console.log(noteInfo);
@@ -123,13 +120,10 @@ const Notes = () => {
             'h1 h2  | undo redo | forecolor backcolor | styleselect bold italic | alignleft alignright |code',
         }}
       />
-      {edit ? (
-        ''
-      ) : (
-        <button type='button' onClick={createNote}>
-          SUBMIT
-        </button>
-      )}
+
+      <button type='button' onClick={createNote}>
+        SUBMIT
+      </button>
     </div>
   );
 

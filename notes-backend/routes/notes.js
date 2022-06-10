@@ -56,7 +56,7 @@ router.put('/edit', (req, res) => {
   const id = req.body.id;
   const text = req.body.text;
 
-  // uppdatera time : CURRENT_TIMESTAMP ?
+  // uppdatera time : CURRENT_TIMESTAMP ? title
   const sql = `UPDATE notes SET text = ? WHERE id = ?`;
 
   req.app.locals.con.query(sql, [text, id], (err, result) => {
