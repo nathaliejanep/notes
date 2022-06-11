@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
@@ -8,6 +8,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
   //If localstorage exists go to loggedin
   const lsID = localStorage.getItem('ID');
   useEffect(() => {
@@ -15,6 +16,12 @@ const Login = () => {
       setOnline(true);
     }
   }, []);
+
+  const signOut = () => {
+    localStorage.removeItem('ID');
+    navigate('/');
+    setOnline(false);
+  };
 
   // If fetched status ok - set ls and online
   const handleSubmit = (e) => {
@@ -39,11 +46,6 @@ const Login = () => {
       });
 
     e.target.reset();
-  };
-
-  const signOut = () => {
-    localStorage.removeItem('ID');
-    setOnline(false);
   };
 
   const renderForm = (

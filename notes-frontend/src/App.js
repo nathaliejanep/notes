@@ -5,6 +5,7 @@ import Notes from './components/notes';
 import GetNotes from './components/getNotes';
 import CreateNote from './components/createNote';
 import EditNote from './components/editnote';
+import Home from './components/home';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
       </ul> */}
 
       <Routes>
+        <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/notes' element={<Notes />}></Route>
         <Route path='/getnotes' element={<GetNotes />}></Route>
