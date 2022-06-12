@@ -5,7 +5,7 @@ const cors = require('cors');
 
 router.use(cors());
 
-/* GET users listing. */
+// Get all notes
 router.get('/', (req, res, next) => {
   let sql = `SELECT * FROM notes`;
 
@@ -19,6 +19,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
+// Get note by id
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   let sql = `SELECT * FROM notes WHERE id = ?`;
@@ -33,13 +34,15 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+// Create note
 router.post('/create', (req, res, next) => {
   const { title, text, author } = req.body;
 
   console.log(title + text + author);
   let sql = `INSERT INTO notes (title, text, author) VALUES (?,?,?)`;
 
-  // Behöver man inte hämta/connect igen?
+  // Behöver man inte hämta/connecta igen?
+  // - Varför funkar det utan 'req.app.locals.con.connect'
   req.app.locals.con.query(sql, [title, text, author], (err, result) => {
     if (err) {
       console.log(err);
@@ -50,13 +53,14 @@ router.post('/create', (req, res, next) => {
   });
 });
 
+// Edit notes
 router.put('/edit', (req, res) => {
-  const { id, text } = req.body;
+  const { title, text, id } = req.body;
 
-  // uppdatera time : CURRENT_TIMESTAMP ? title
-  const sql = `UPDATE notes SET text = ? WHERE id = ?`;
+  // How do I update time : GETDATE()?
+  const sql = `UPDATE notes SET title = ?, text = ? WHERE id = ?`;
 
-  req.app.locals.con.query(sql, [text, id], (err, result) => {
+  req.app.locals.con.query(sql, [title, text, id], (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).json({ status: 'error' });
@@ -65,6 +69,7 @@ router.put('/edit', (req, res) => {
   });
 });
 
+// Delete note by id
 router.delete('/delete/:id', (req, res) => {
   const id = req.params.id;
   const sql = `DELETE FROM notes WHERE id = ?`;

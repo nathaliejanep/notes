@@ -19,7 +19,7 @@ const EditNote = () => {
 
   const getNote = (id) => {
     axios(`http://localhost:3001/notes/${id}`).then((res) => {
-      // setNewTitle(res.data[0].title);
+      setNewTitle(res.data[0].title);
       setNoteText(res.data[0].text);
       // console.log(res.data[0].text);
       console.log(noteText);
@@ -48,14 +48,13 @@ const EditNote = () => {
         <div>
           <input
             type='text'
-            placeholder='Title'
+            value={newTitle || ''}
             required
             onChange={(e) => {
               setNewTitle(e.target.value);
             }}
           />
           <Editor
-            // Vilket sätt är bäst onEditorChange / onInit
             apiKey='n93h6sbynpq3lmvrtngd2e8lrv0waecc97oi0fgqhmcid3v6'
             onEditorChange={(newText) => setNoteText(newText)}
             initialValue={noteText}

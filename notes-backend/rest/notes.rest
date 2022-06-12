@@ -19,8 +19,9 @@ PUT http://localhost:3000/notes/edit
 Content-Type: application/json
 
 {
-"text":"ja det funkaaar bra",
-"id":38
+    "title":"Glad när saker funkar",
+    "text":"Hej jag finns i databasen igen",
+    "id":68
 }
 
 ###

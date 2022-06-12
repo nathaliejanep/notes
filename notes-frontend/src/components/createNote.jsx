@@ -6,6 +6,7 @@ const CreateNote = () => {
   const editorRef = useRef();
 
   const [success, setSuccess] = useState(false);
+  const [title, setTitle] = useState('');
 
   const lsID = localStorage.getItem('ID');
 
@@ -14,6 +15,7 @@ const CreateNote = () => {
     setSuccess(true);
     axios
       .post('http://localhost:3001/notes/create', {
+        title: title,
         text: editorRef.current.getContent(),
       })
       .then((res) => {
@@ -25,6 +27,13 @@ const CreateNote = () => {
 
   const addNote = (
     <div>
+      <input
+        type='text'
+        placeholder='Enter your title here...'
+        onChange={(e) => {
+          setTitle(e.target.value);
+        }}
+      />
       <Editor
         apiKey='n93h6sbynpq3lmvrtngd2e8lrv0waecc97oi0fgqhmcid3v6'
         onInit={(evt, editor) => (editorRef.current = editor)}
