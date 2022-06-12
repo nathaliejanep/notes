@@ -14,10 +14,10 @@ In the notes-backend directory run:
 ### `npm run dev`
 
 In the notes-frontend directory run:
-
+### `npm init`
 ### `npm start`
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3002](http://localhost:3002) to view it in the browser.
 
 
 ## Log in
