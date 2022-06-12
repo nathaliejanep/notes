@@ -9,8 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
-  //If localstorage exists go to loggedin
   const lsID = localStorage.getItem('ID');
+
   useEffect(() => {
     if (lsID) {
       setOnline(true);
@@ -23,8 +23,7 @@ const Login = () => {
     setOnline(false);
   };
 
-  // If fetched status ok - set ls and online
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
     axios
@@ -40,6 +39,7 @@ const Login = () => {
         } else if (status === 'ok') {
           setOnline(true);
           setError(false);
+
           const getId = res.data.result[0].id;
           localStorage.setItem('ID', getId);
         }
@@ -49,9 +49,9 @@ const Login = () => {
   };
 
   const renderForm = (
-    <div className='wrapper'>
+    <div>
       <h2>Log In</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin} className='login-form'>
         <div className='container'>
           <label htmlFor='username'>Username:</label>
           <input
@@ -78,25 +78,23 @@ const Login = () => {
       </form>
     </div>
   );
+
   const renderOnline = (
-    <div>
-      <button onClick={signOut}>Sign out</button>
-      <ul>
-        <li>
-          <Link to='/getnotes'>All Notes</Link>
-        </li>
-        <li>
-          <Link to='/createnote'>Add New Note</Link>
-        </li>
-      </ul>
-    </div>
+    <nav>
+      <button onClick={signOut} className='logout-btn'>
+        Sign out
+      </button>
+      <br />
+      <Link to='/getnotes'>All Notes</Link>
+      <br />
+      <Link to='/createnote'>Add New Note</Link>
+    </nav>
   );
+
   return (
-    <div className='maincontainer'>
+    <div>
       <div>{online ? renderOnline : renderForm}</div>
-      <div>
-        {error ? <p>Invalid username or password</p> : <p>Welcome to Log In</p>}
-      </div>
+      <div>{error ? <p>Invalid username or password</p> : null}</div>
     </div>
   );
 };

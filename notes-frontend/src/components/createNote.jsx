@@ -4,13 +4,16 @@ import axios from 'axios';
 
 const CreateNote = () => {
   const editorRef = useRef();
+  const clearTitle = useRef(null);
 
   const [success, setSuccess] = useState(false);
   const [title, setTitle] = useState('');
 
   const lsID = localStorage.getItem('ID');
 
-  const createNote = () => {
+  const createNote = (e) => {
+    e.preventDefault();
+
     console.log(editorRef.current.getContent());
     setSuccess(true);
     axios
@@ -22,31 +25,35 @@ const CreateNote = () => {
         console.log(res);
       });
 
+    clearTitle.current.value = '';
     editorRef.current.setContent('');
   };
 
   const addNote = (
     <div>
-      <input
-        type='text'
-        placeholder='Enter your title here...'
-        onChange={(e) => {
-          setTitle(e.target.value);
-        }}
-      />
-      <Editor
-        apiKey='n93h6sbynpq3lmvrtngd2e8lrv0waecc97oi0fgqhmcid3v6'
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        init={{
-          menubar: false,
-          toolbar:
-            'h1 h2  | undo redo | forecolor backcolor | styleselect bold italic | alignleft alignright |code',
-        }}
-      />
+      <form onSubmit={createNote}>
+        <label htmlFor='title'></label>
+        <input
+          ref={clearTitle}
+          type='text'
+          name='title'
+          placeholder='Enter your title here...'
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        <Editor
+          apiKey='n93h6sbynpq3lmvrtngd2e8lrv0waecc97oi0fgqhmcid3v6'
+          onInit={(evt, editor) => (editorRef.current = editor)}
+          init={{
+            menubar: false,
+            toolbar:
+              'undo redo | forecolor backcolor | styleselect bold italic | alignleft alignright |code',
+          }}
+        />
 
-      <button type='button' onClick={createNote}>
-        SUBMIT
-      </button>
+        <input type='submit' placeholder='Submit' value='SUBMIT' />
+      </form>
     </div>
   );
 

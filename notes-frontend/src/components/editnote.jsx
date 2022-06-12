@@ -7,8 +7,6 @@ const EditNote = () => {
   const [noteText, setNoteText] = useState('');
   const [newTitle, setNewTitle] = useState('');
   const [edited, setEdited] = useState(false);
-  // Hook för noteInfo med alla objekt?
-  //const [noteInfo, setNoteInfo] = useState({title:'', text:''});
   const editorRef = useRef();
   const location = useLocation();
   const id = location.state.id;
@@ -21,19 +19,17 @@ const EditNote = () => {
     axios(`http://localhost:3001/notes/${id}`).then((res) => {
       setNewTitle(res.data[0].title);
       setNoteText(res.data[0].text);
-      // console.log(res.data[0].text);
-      console.log(noteText);
     });
   };
 
   const updateNote = () => {
     setEdited(true);
+    // const date = new Date().toLocaleString();
     axios
       .put(`http://localhost:3001/notes/edit`, {
-        //Skicka med i backend för att funka
+        id: id,
         title: newTitle,
         text: noteText,
-        id: id,
       })
       .then((res) => {
         console.log(res);
@@ -57,12 +53,12 @@ const EditNote = () => {
           <Editor
             apiKey='n93h6sbynpq3lmvrtngd2e8lrv0waecc97oi0fgqhmcid3v6'
             onEditorChange={(newText) => setNoteText(newText)}
-            initialValue={noteText}
+            value={noteText}
             onInit={(evt, editor) => (editorRef.current = editor)}
             init={{
               menubar: false,
               toolbar:
-                'h1 h2  | undo redo | forecolor backcolor | styleselect bold italic | alignleft alignright |code',
+                'undo redo | forecolor backcolor | styleselect bold italic | alignleft alignright |code',
             }}
           />
           <button

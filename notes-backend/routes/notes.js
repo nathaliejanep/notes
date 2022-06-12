@@ -8,8 +8,6 @@ router.use(cors());
 router.get('/', (req, res) => {
   let sql = `SELECT * FROM notes`;
 
-  // Behöver man inte hämta/connecta igen?
-  // - Varför funkar det utan 'req.app.locals.con.connect'?
   req.app.locals.con.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -56,7 +54,7 @@ router.post('/create', (req, res) => {
 router.put('/edit', (req, res) => {
   const { title, text, id } = req.body;
 
-  // Hur uppdaterar man time? : GETDATE()?
+  // Hur uppdaterar man updated? : NEWDATE() eller skicka från frontend?
   const sql = `UPDATE notes SET title = ?, text = ? WHERE id = ?`;
 
   req.app.locals.con.query(sql, [title, text, id], (err, result) => {

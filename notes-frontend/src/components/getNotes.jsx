@@ -31,14 +31,17 @@ const GetNotes = () => {
       <div>
         {notes.map((note) => (
           <div key={note.id} className='note-box'>
-            <p>{note.title}</p>
-            <p>{note.time}</p>
-            <p dangerouslySetInnerHTML={{ __html: note.text }} />
-            <p>{note.author}</p>
+            <h2>{note.title}</h2>
+            <p
+              className='text-box'
+              dangerouslySetInnerHTML={{ __html: note.text }}
+            />
 
-            <Link to='/editnote' state={{ id: note.id }}>
-              Edit Note
-            </Link>
+            <button className='edit-btn'>
+              <Link to='/editnote' state={{ id: note.id }}>
+                EDIT
+              </Link>
+            </button>
             <button
               onClick={() => {
                 deleteNote(note.id);
