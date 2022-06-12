@@ -34,13 +34,13 @@ const Login = () => {
       })
       .then((res) => {
         const status = res.data.status;
-        const getId = res.data.result[0].id;
 
         if (status === 'wrong') {
           setError(true);
         } else if (status === 'ok') {
           setOnline(true);
           setError(false);
+          const getId = res.data.result[0].id;
           localStorage.setItem('ID', getId);
         }
       });

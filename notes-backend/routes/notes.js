@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2');
 const cors = require('cors');
 
 router.use(cors());
 
 // Get all notes
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   let sql = `SELECT * FROM notes`;
 
+  // Behöver man inte hämta/connecta igen?
+  // - Varför funkar det utan 'req.app.locals.con.connect'?
   req.app.locals.con.query(sql, (err, result) => {
     if (err) {
       console.log(err);
@@ -19,8 +20,8 @@ router.get('/', (req, res, next) => {
   });
 });
 
-// Get note by id
-router.get('/:id', (req, res, next) => {
+// Get note by ID
+router.get('/:id', (req, res) => {
   const id = req.params.id;
   let sql = `SELECT * FROM notes WHERE id = ?`;
 
@@ -34,15 +35,13 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
-// Create note
-router.post('/create', (req, res, next) => {
+// Create a note
+router.post('/create', (req, res) => {
   const { title, text, author } = req.body;
 
   console.log(title + text + author);
   let sql = `INSERT INTO notes (title, text, author) VALUES (?,?,?)`;
 
-  // Behöver man inte hämta/connecta igen?
-  // - Varför funkar det utan 'req.app.locals.con.connect'
   req.app.locals.con.query(sql, [title, text, author], (err, result) => {
     if (err) {
       console.log(err);
@@ -57,7 +56,7 @@ router.post('/create', (req, res, next) => {
 router.put('/edit', (req, res) => {
   const { title, text, id } = req.body;
 
-  // How do I update time : GETDATE()?
+  // Hur uppdaterar man time? : GETDATE()?
   const sql = `UPDATE notes SET title = ?, text = ? WHERE id = ?`;
 
   req.app.locals.con.query(sql, [title, text, id], (err, result) => {
@@ -69,7 +68,7 @@ router.put('/edit', (req, res) => {
   });
 });
 
-// Delete note by id
+// Delete note by ID
 router.delete('/delete/:id', (req, res) => {
   const id = req.params.id;
   const sql = `DELETE FROM notes WHERE id = ?`;

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2');
 const cors = require('cors');
 
 router.use(cors());
 
-router.post('/', (req, res, next) => {
+// Log in user
+router.post('/', (req, res) => {
   const { username, password } = req.body;
 
   let sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
