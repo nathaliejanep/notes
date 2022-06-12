@@ -32,11 +32,9 @@ const CreateNote = () => {
   const addNote = (
     <div>
       <form onSubmit={createNote}>
-        <label htmlFor='title'></label>
         <input
           ref={clearTitle}
           type='text'
-          name='title'
           placeholder='Enter your title here...'
           onChange={(e) => {
             setTitle(e.target.value);
